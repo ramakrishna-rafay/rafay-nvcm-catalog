@@ -3,8 +3,9 @@
 **Copyright (c) 2026  Rafay Systems, All rights reserved**
 
 This is the content of the **`rafay-nvcm-catalog`** GitOps repository, authored here so the gate suite can
-validate it offline. Publishing to that repo is a copy step — the same relationship `stc/` has to a
-customer's own data repo. Design: [`../docs/gitops_repo_design.md`](../docs/gitops_repo_design.md).
+validate it offline. Publishing to that repo is a copy step — the same relationship a customer's folder
+(`<customer>/`) has to that customer's own data repo.
+Design: [`../docs/gitops_repo_design.md`](../docs/gitops_repo_design.md).
 
 ## What belongs here
 
@@ -26,8 +27,9 @@ Three directories are specified but **not yet present**, and their absence is de
 
 A location instance (`blr-dc01`) or a provider tenant *is a customer's identity*. This repo is shared and
 acts as the **fallback** when a blueprint is silent, so a site instance here could silently place one
-customer's devices in another customer's site. That is a bug class this project has hit five times ("no STC
-default behind a customer's blueprint"), so it is made structurally impossible rather than remembered:
+customer's devices in another customer's site. That is a bug class this project has hit five times ("no
+reference-site default behind a customer's blueprint"), so it is made structurally impossible rather than
+remembered:
 
 * `jobs/load_bootstrap_data/core.py` **raises** `CatalogError` if either file appears, and
 * `test/blueprint/test_catalog_bootstrap.py` fails the build if either exists.
