@@ -1,0 +1,44 @@
+---
+# The location-type HIERARCHY SHAPE — Provider -> Region -> Site -> Building -> Room.
+# Axis A: the shape is identical for every data centre; which INSTANCES exist at each level is Axis B and
+# comes from the blueprint's `location_path`. NVIDIA's bootstrap schema uses these same level names.
+#
+# `content_types` must include dcim.rack from Site downwards even though nothing in this framework models
+# racks yet (the string "rack" appears nowhere in deploy_scripts/) — it matches the live catalog, and
+# narrowing it would be an unrelated behaviour change on any instance that adopts these.
+- name: Provider
+  description: "Top-level provider / operator"
+  content_types:
+    - dcim.device
+  deployment_types: [all]
+
+- name: Region
+  description: "Geographic region"
+  parent: Provider
+  content_types:
+    - dcim.device
+  deployment_types: [all]
+
+- name: Site
+  description: "Physical or logical site"
+  parent: Region
+  content_types:
+    - dcim.device
+    - dcim.rack
+  deployment_types: [all]
+
+- name: Building
+  description: "Building within a site"
+  parent: Site
+  content_types:
+    - dcim.device
+    - dcim.rack
+  deployment_types: [all]
+
+- name: Room
+  description: "Room within a building"
+  parent: Building
+  content_types:
+    - dcim.device
+    - dcim.rack
+  deployment_types: [all]

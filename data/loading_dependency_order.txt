@@ -1,0 +1,32 @@
+# Load order for this catalog. Parents before children; anything referenced by name before its referrer.
+# The numbers are the LEGACY loader's own (kept so this stays comparable to the file it replaces); the gaps
+# are its other files, which are Axis B or not carried here (see below).
+#
+# The order is not advisory — `core.py` LOAD_ORDER is the single source and this file is asserted against it
+# by test/blueprint/test_catalog_bootstrap.py, so the two cannot drift.
+#
+#   ?   statuses.yaml        MUST precede locations: every location carries status__name.
+#                            The legacy file's own number was never observed, hence '?'. Ordered first here
+#                            because it has no dependencies of its own and something depends on it.
+#   1   manufacturers.yaml   before platforms (platform.manufacturer) and device_types
+#   3   location_types.yaml  before locations; self-parented in chain order (Provider -> ... -> Room)
+#   4   namespaces.yaml      independent
+#   9   roles.yaml           independent
+#  12   platforms.yaml       needs manufacturers
+#   -   device_types/        needs manufacturers; empty by design (see device_types/README.md)
+#
+# NOT CARRIED HERE, and why:
+#   6   locations.yaml       Axis B — site instances. Owned by the blueprint (location_path), applied by
+#                            2.0 - Foundation. Its presence in this repo is a BUILD FAILURE.
+#   ?   tenants.yaml         Axis B — a provider tenant is the customer's identity. Same rule.
+#   ?   tags.yaml            generic and welcome, but the legacy file was never inspected; not invented.
+#   ?   custom_fields, relationships
+#                            generic and welcome; same reason.
+
+statuses.yaml
+manufacturers.yaml
+location_types.yaml
+namespaces.yaml
+roles.yaml
+platforms.yaml
+device_types/

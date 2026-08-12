@@ -1,0 +1,35 @@
+---
+# The dcim Role catalog. Axis A — the superset; which roles a site actually uses is the blueprint's
+# `foundation.roles`, and the fabric designs reference `spine` / `leaf` by name.
+#
+# Colours here are the LIVE catalog's (captured 2026-08-06) and differ from the blueprint's for spine/leaf
+# (blueprint: 0000ff / 00ff00). That is not a conflict to resolve in this file: both appliers are
+# create_or_update and the blueprint runs last, so a site that declares its own colours wins. Recording the
+# difference rather than silently aligning it, because aligning would hide which source is authoritative.
+- name: spine
+  color: "aa1409"
+  description: "Spine switch role"
+  content_types:
+    - dcim.device
+  deployment_types: [all]
+
+- name: leaf
+  color: "4caf50"
+  description: "Leaf switch role"
+  content_types:
+    - dcim.device
+  deployment_types: [all]
+
+- name: mgmt
+  color: "ff9800"
+  description: "Management switch role"
+  content_types:
+    - dcim.device
+  deployment_types: [all]
+
+- name: GPU
+  color: "76b900"
+  description: "GPU / compute server"
+  content_types:
+    - dcim.device
+  deployment_types: [all]

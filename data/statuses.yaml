@@ -1,0 +1,34 @@
+---
+# DERIVED, not copied. Nothing in this repo has ever created Statuses: `site_designs.py` never emits them,
+# and the blueprint's `foundation.statuses` key is allowed by the schema but unused by the reference site.
+# The designs simply assumed Nautobot's defaults existed. These two names are the ones the committed
+# designs actually reference:
+#
+#   status__name: "Active"      locations, prefixes, devices, interfaces, IP addresses, cables
+#   status__name: "Connected"   the cable link state set by !connect_cable
+#
+# Declaring them here means `2.0 · Foundation` can assert its prerequisite (it checks the Statuses the
+# foundation design references) instead of trusting that nobody pruned the defaults.
+#
+# ⚠️ SCHEMA CAVEAT: the legacy repo's own `statuses.yaml` was never inspected, so these field names follow
+# Nautobot's Status model and the `roles.yaml` precedent (name/color/description/content_types). Reconcile
+# if that file ever becomes available.
+- name: Active
+  color: "4caf50"
+  description: "In production and expected to be reachable"
+  content_types:
+    - dcim.location
+    - dcim.device
+    - dcim.interface
+    - dcim.cable
+    - ipam.prefix
+    - ipam.ipaddress
+  deployment_types: [all]
+
+- name: Connected
+  color: "4caf50"
+  description: "Cable/link is connected — set by !connect_cable"
+  content_types:
+    - dcim.cable
+    - dcim.interface
+  deployment_types: [all]

@@ -1,0 +1,25 @@
+---
+# NOS catalog. Axis A.
+#
+# WHY THIS FILE MATTERS more than it looks. The fabric designs DO create the Platform — `emit_underlay`
+# emits `platforms: [ !create_or_update:name ]` up front, because NVCM's DeployWorkflow dereferences
+# `device.platform.name` and a platform-less switch crashes it. But the design emits the NAME ONLY. The
+# richer attributes the blueprint carries in `foundation.platforms` (`manufacturer`, `network_driver`,
+# `description`) reach Nautobot only through `foundation_data.py` -> the legacy loader — the path being
+# retired. So without this file the Platform still exists, but under-populated: no `network_driver`.
+#
+# This is therefore not a closure fix (the name is never dangling) — it is completeness. Stated precisely
+# because an earlier draft of the design doc called it a dangling reference, and it is not.
+# One deliberate edit from the snapshot: its description read "Cumulus Linux 5.6 Network OS". A version
+# pinned in a GENERIC catalog goes stale the moment 5.13 lands, and the version that matters is resolved
+# per-site by `template_trees.py` from the blueprint. Dropped the version, kept the name.
+- name: Cumulus Linux
+  manufacturer: NVIDIA
+  description: "Cumulus Linux Network OS"
+  network_driver: cumulus
+  napalm_driver: ""
+  deployment_types: [all]
+
+- name: ubuntu
+  description: "Ubuntu Linux (GPU/compute server OS)"
+  deployment_types: [all]

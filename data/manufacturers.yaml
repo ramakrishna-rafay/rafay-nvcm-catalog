@@ -1,0 +1,10 @@
+---
+# Vendor list. Axis A — the same set serves any DC; which ones a site uses is the blueprint's
+# `foundation.manufacturers`. Captured from the live catalog 2026-08-06.
+- name: NVIDIA
+  description: "NVIDIA Networking"
+  deployment_types: [all]
+
+- name: Generic
+  description: "Generic vendor (compute/server stand-ins)"
+  deployment_types: [all]
